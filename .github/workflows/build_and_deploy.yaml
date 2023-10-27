@@ -19,14 +19,13 @@ jobs:
             - name: Retrieve secret from Vault
               uses: hashicorp/vault-action@v2.4.0
               with:
-                  exportToken: true
-                  exportEnv: true # export as env variable
+                  exportToken: true # exports vault token as env variable; optional
                   method: jwt
                   url: "https://vaultcluster-public-vault-4e04a4d0.810def75.z1.hashicorp.cloud:8200"
-                  role: "github-actions" # vault role name
-                  secrets: "secret/data/github-actions/my-secret hello" # vault secret path
-                  namespace: "admin"
+                  role: github-actions # vault role name
+                  secrets: secret/data/github-actions hello # vault secret path
+                  namespace: admin
 
             - name: Use secret from Vault
               run: |
-                  echo "$HELLO"
+                  echo "$HELLO "

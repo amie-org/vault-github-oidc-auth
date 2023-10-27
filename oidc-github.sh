@@ -27,3 +27,5 @@ EOF
 
 # write a secret named my-secret at the kv v2 path
 vault kv put secret/github-actions/my-secret hello=action 
+
+vault kv put secret/github-actions hello=action 
