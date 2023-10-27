@@ -10,23 +10,22 @@ on:
     workflow_dispatch:
 
 jobs:
-  retrieve-secret:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Retrieve secret from Vault
-        uses: hashicorp/vault-action@v2.4.0
-          with:
-            exportToken: true # export as env variable
-            method: jwt
-            url: "https://vaultcluster-public-vault-4e04a4d0.810def75.z1.hashicorp.cloud:8200"
-            role: "github-actions" # vault role name
-            secrets: "secret/github-actions/my-secret" # vault secret path
-            method: jwt
-            namespace: "admin"
+    retrieve-secret:
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+        steps:
+            - name: Retrieve secret from Vault
+              uses: hashicorp/vault-action@v2.4.0
+              with:
+                  exportToken: true # export as env variable
+                  method: jwt
+                  url: "https://vaultcluster-public-vault-4e04a4d0.810def75.z1.hashicorp.cloud:8200"
+                  role: "github-actions" # vault role name
+                  secrets: "secret/github-actions/my-secret" # vault secret path
+                  namespace: "admin"
 
-      - name: Use secret from Vault
-        run: |
-          echo "$HELLO" 
+            - name: Use secret from Vault
+              run: |
+                  echo "$HELLO"
