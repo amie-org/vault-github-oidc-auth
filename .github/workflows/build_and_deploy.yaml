@@ -41,6 +41,7 @@ jobs:
             - name: Retrieve secret from Vault
               uses: hashicorp/vault-action@v2.4.0
               with:
+                  exportToken: true
                   method: jwt
                   url: https://vaultcluster-public-vault-4e04a4d0.810def75.z1.hashicorp.cloud:8200
                   namespace: admin

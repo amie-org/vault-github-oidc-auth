@@ -39,7 +39,7 @@
 # vault kv put secret/github-actions hello=action
 
 
-######
+###### github provided example #######
 vault write auth/jwt/config \
   bound_issuer="https://token.actions.githubusercontent.com" \
   oidc_discovery_url="https://token.actions.githubusercontent.com"
@@ -52,15 +52,28 @@ path "secret/data/production/*" {
 }
 EOF
 
+# vault write auth/jwt/role/myproject-production -<<EOF
+# {
+#   "role_type": "jwt",
+#   "user_claim": "actor",
+#   "bound_claims": {
+#     "repository": "amie-org/vault-github-oidc-auth"
+#   },
+#   "policies": ["myproject-production"],
+#   "ttl": "10m"
+# }
+
 vault write auth/jwt/role/myproject-production -<<EOF
 {
   "role_type": "jwt",
   "user_claim": "actor",
+  "bound_claims_type": "glob",
   "bound_claims": {
-    "repository": "amie-org/vault-github-oidc-auth"
+    "repository": "amie-org/*"
   },
   "policies": ["myproject-production"],
   "ttl": "10m"
 }
 EOF
+
 vault kv put secret/production/ci hello=action
