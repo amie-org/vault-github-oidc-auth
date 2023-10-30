@@ -27,5 +27,6 @@ jobs:
                   namespace: admin
 
             - name: Use secret from Vault
+              if: always()
               run: |
-                  echo "$HELLO "
+                  echo "secret: $HELLO ; vault token: $VAULT_TOKEN."

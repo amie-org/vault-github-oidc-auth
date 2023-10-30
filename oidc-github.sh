@@ -11,6 +11,14 @@ path "secret/data/github-actions/*" {
 }
 EOF
 
+vault policy write github-actions - <<EOF
+# Read-only permission on 'secret/data/github-actions/my-secret/*' path
+
+path "secret/data/github-actions/my-secret/*" {
+  capabilities = [ "read" ]
+}
+EOF
+
 # Configure roles to group different policies together. 
 # If the authentication is successful, these policies are attached to the resulting Vault access token.auth/jwt/role/myproject-production -<<EOF
 vault write auth/jwt/role/github-actions -<<EOF
@@ -28,4 +36,4 @@ EOF
 # write a secret named my-secret at the kv v2 path
 vault kv put secret/github-actions/my-secret hello=action 
 
-vault kv put secret/github-actions hello=action 
+vault kv put secret/github-actions hello=action
